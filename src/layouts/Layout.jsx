@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Modal from 'react-modal'
+import { toast, ToastContainer, Bounce } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 import Sidebar from '../components/Sidebar'
 import Resumen from '../components/Resumen'
 import ModalProducto from '../components/ModalProducto'
@@ -36,6 +38,20 @@ export default function Layout() {
       <Modal isOpen={modal} style={customStyles}>
         <ModalProducto />
       </Modal>
+
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }
