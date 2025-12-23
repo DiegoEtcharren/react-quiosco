@@ -19,7 +19,6 @@ const QuioscoProvider = ({children}) => {
         settotal(nuevoTotal)
     }, [pedido])
 
-    console.log(import.meta.env.VITE_API_URL);
     const obtenerCategorias = async() => {
       try {
         const { data } = await clienteAxios('/api/categorias');
