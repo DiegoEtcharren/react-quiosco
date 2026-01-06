@@ -1,4 +1,3 @@
-import { productos as data } from '../data/productos'
 import useSWR from 'swr';
 import Producto from '../components/Producto';
 import useQuiosco from '../hooks/useQuiosco';
@@ -12,7 +11,7 @@ export default function Inicio() {
 
   const { data, error, isLoading } = useSWR("/api/productos", fetcher,
     {
-      refreshInterval: 1000,
+      refreshInterval: 10000,
     }
   );
   if (isLoading) return 'Cargando...';
