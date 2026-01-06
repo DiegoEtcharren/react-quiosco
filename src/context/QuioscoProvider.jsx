@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect} from "react"
 import { toast, ToastContainer, Bounce } from "react-toastify";
-import { categorias as categoriasDB } from "../data/categorias";
 import clienteAxios from "../config/axios";
 
 const QuioscoContext = createContext();
@@ -101,6 +100,25 @@ const QuioscoProvider = ({children}) => {
       });
     };
 
+    const handleSubmitNuevaOrden = async () => {
+      const token = localStorage.getItem('AUTH_TOKEN');
+      try {
+        await clienteAxios.post(
+          "/api/pedidos",
+          {total,
+
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return (
         <QuioscoContext.Provider
             value = {{
@@ -115,7 +133,8 @@ const QuioscoProvider = ({children}) => {
                 handleAgregarPedido,
                 handleEditarCantidad,
                 handleEliminarProductoPedido,
-                total
+                total,
+                handleSubmitNuevaOrden
             }}
         >
             {children}
