@@ -1,12 +1,15 @@
 import { formatearDinero } from "../helpers";
 import useQuiosco from "../hooks/useQuiosco"
 import ResumenProducto from "./ResumenProducto";
+import { useAuth } from "../hooks/useAuth"
+
 export default function Resumen() {
   const { pedido, total, handleSubmitNuevaOrden} = useQuiosco();
+  const { logout } = useAuth({});
   const comprobarPedido = () => pedido.length === 0;
   const handleSubmit = e => {
     e.preventDefault();
-    handleSubmitNuevaOrden();
+    handleSubmitNuevaOrden(logout);
   }
   return (
     <aside className="w-72 h-screen overflow-y-scroll p-5">
