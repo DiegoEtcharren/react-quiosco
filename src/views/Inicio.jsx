@@ -7,14 +7,18 @@ export default function Inicio() {
   const { categoriaActual } = useQuiosco();
 
   // Consulta SWR:
-  const fetcher = () => clienteAxios("/api/productos").then(data => data.data);
+  const token = localStorage.getItem('AUTH_TOKEN');
+  const fetcher = () =>
+    clienteAxios("api/productos", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((datos) => datos.data);
 
-  const { data, error, isLoading } = useSWR("/api/productos", fetcher,
-    {
-      refreshInterval: 10000,
-    }
-  );
-  if (isLoading) return 'Cargando...';
+  const { data, error, isLoading } = useSWR("/api/productos", fetcher, {
+    refreshInterval: 1000,
+  });
+  if (isLoading) return "Cargando...";
   if (error) console.log(error);
   const productos = data.data.filter(
     (producto) => producto.categoria_id === categoriaActual.id

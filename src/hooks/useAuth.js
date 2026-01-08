@@ -55,20 +55,30 @@ export const useAuth = ({middleware, url}) => {
     };
 
     useEffect(() => {
-      if (middleware === "guest" && url && user) {
-        navigate(url);
+      if (middleware === "guest" && user) {
+        // Fix: If Admin, ignore stored 'url' and FORCE /admin
+        if (user.admin) {
+          navigate("/admin");
+        }
+        // If Regular User, go to intended URL or fallback
+        else if (url) {
+          navigate(url);
+        }
       }
 
-      if (middleware == "guest" && user && user.admin) {
-        navigate("/admin");
-      }
-
-      if (middleware == "admin" && user && !user.admin) {
+      if (middleware === "admin" && user && !user.admin) {
         navigate("/");
       }
 
-      if (middleware === "auth" && error) {
-        navigate('/auth/login');
+      if (middleware === "auth") {
+        // Not logged in? Go to login
+        if (error) {
+          navigate("/auth/login");
+        }
+        // NEW STRICT RULE: If Admin is on a regular user page, FORCE /admin
+        else if (user && user.admin) {
+          navigate("/admin");
+        }
       }
     }, [user, error]);
 
