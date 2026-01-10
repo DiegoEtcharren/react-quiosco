@@ -16,7 +16,6 @@ export default function Productos() {
 
   if (isLoading) return ('Cargando...');
 
-  console.log(data);
 
   return (
     <div>
@@ -24,7 +23,7 @@ export default function Productos() {
       <p className="text-2xl my-10">Maneja la disponibilidad desde aquí</p>
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {data.data.map((producto) => (
-          <Producto key={producto.imagen} producto={producto} />
+          <Producto key={producto.imagen} producto={producto} botonDisponible={true} />
         ))}
       </div>
     </div>
